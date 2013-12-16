@@ -1,0 +1,6 @@
+node_modules
+app/assets/build
+npm-debug.log
+
+validation-report.json
+validation-status.json
