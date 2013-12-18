@@ -24,7 +24,8 @@ module.exports = function (grunt) {
 		},
 		validation: {
 			options: {
-				stoponerror: true
+				stoponerror: true,
+				reset: true
 			},
 			files: {
 				src: [
@@ -125,7 +126,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-html-validation');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 
-	grunt.registerTask('validate', ['jshint'/*, 'validation'*/]); // Commented because buggy
+	grunt.registerTask('validate', ['jshint', 'validation']);
 
 	// Asset tasks
 	grunt.loadNpmTasks('grunt-remove-logging');
