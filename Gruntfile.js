@@ -19,6 +19,14 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		csslint: {
+			options: {
+				csslintrc: '.csslintrc'
+			}
+		},
+		lesslint: {
+			src: ['app/assets/less/**/*.less']
+		},
 		validation: {
 			options: {
 				stoponerror: true,
@@ -135,10 +143,11 @@ module.exports = function (grunt) {
 
 
 	// Validation
-	grunt.loadNpmTasks('grunt-html-validation');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-lesslint');
+	grunt.loadNpmTasks('grunt-html-validation');
 
-	grunt.registerTask('validate', ['jshint'/*, 'validation'*/]); // Don't run this task with others; buggy
+	grunt.registerTask('validate', ['jshint', 'lesslint'/*, 'validation'*/]); // Validation is buggy
 
 	// Asset tasks
 	grunt.loadNpmTasks('grunt-remove-logging');
