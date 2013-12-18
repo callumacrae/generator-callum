@@ -1,6 +1,11 @@
+# Repositories
 node_modules
-app/assets/build
-npm-debug.log
+app/assets/js/bower
 
+# Project files
+app/assets/build
+
+# Generated files
+npm-debug.log
 validation-report.json
 validation-status.json

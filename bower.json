@@ -1,0 +1,9 @@
+{
+	"name": "test",
+	"authors": [
+		"Callum Macrae <callum@macr.ae>"
+	],
+	"dependencies": {
+		"jquery": "1.10.2"
+	}
+}

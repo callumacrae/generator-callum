@@ -1,12 +1,9 @@
-var fs = require('fs'),
-	DEBUG;
-
 /* jshint camelcase: false */
 
 module.exports = function (grunt) {
 	'use strict';
 
-	DEBUG = grunt.cli.tasks[0] !== 'build';
+	var DEBUG = grunt.cli.tasks[0] !== 'build';
 
 	var config = {
 		generateValidationReport: false,
@@ -35,12 +32,18 @@ module.exports = function (grunt) {
 		},
 
 
+		bower: {
+			target: {
+				rjsConfig: 'app/assets/js/build.js'
+			}
+		},
 		requirejs: {
 			compile: {
 				options: {
 					name: 'app',
 					baseUrl: 'app/assets/js',
 					out: 'app/assets/build/script.js',
+					mainConfigFile: 'app/assets/js/build.js',
 					include:  ['lib/require']
 				}
 			}
@@ -116,8 +119,17 @@ module.exports = function (grunt) {
 		gruntConfig.validation.options.reportpath = false;
 	}
 
-	var requireOptionsFile = JSON.parse(fs.readFileSync('app/assets/js/build.json'));
-	mergeRequireOptions(gruntConfig.requirejs.compile.options, requireOptionsFile);
+	// Minify and remove debug when DEBUG is false
+	if (DEBUG) {
+		gruntConfig.requirejs.compile.options.optimize = 'none';
+	} else {
+		gruntConfig.requirejs.compile.options.preserveLicenseComments = false;
+		gruntConfig.requirejs.compile.options.uglify = {
+			defines: {
+				DEBUG: ['name', false]
+			}
+		};
+	}
 
 	grunt.initConfig(gruntConfig);
 
@@ -126,14 +138,15 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-html-validation');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 
-	grunt.registerTask('validate', ['jshint', 'validation']);
+	grunt.registerTask('validate', ['jshint'/*, 'validation'*/]);
 
 	// Asset tasks
 	grunt.loadNpmTasks('grunt-remove-logging');
+	grunt.loadNpmTasks('grunt-bower-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-less');
 
-	grunt.registerTask('build', ['validate', 'requirejs', 'less']);
+	grunt.registerTask('build', ['validate', 'bower', 'requirejs', 'less']);
 
 	// Watchers
 	grunt.loadNpmTasks('grunt-contrib-watch');
@@ -149,40 +162,3 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['build', 'shell:watchers']);
 
 };
-
-function mergeRequireOptions(options, newOptions) {
-	'use strict';
-
-	for (var option in newOptions) {
-		if (!newOptions.hasOwnProperty(option)) {
-			return;
-		}
-
-		if (option === 'include' && options.include) {
-			/* jshint loopfunc: true */
-			newOptions.forEach(function (include) {
-				if (options.include.indexOf(include) == -1) {
-					options.include.add(include);
-				}
-			});
-
-			continue;
-		} else if (option === 'requirejs' && DEBUG) {
-			if (options.uglify && options.uglify.defines && options.uglify.defines.DEBUG) {
-				options.uglify.defines.DEBUG[1] = true;
-			}
-		} else if (option === 'dev') {
-			if (DEBUG) {
-				mergeRequireOptions(options, newOptions.dev);
-			}
-			continue;
-		} else if (option === 'prod') {
-			if (!DEBUG) {
-				mergeRequireOptions(options, newOptions.prod);
-			}
-			continue;
-		}
-
-		options[option] = newOptions[option];
-	}
-}
