@@ -3,7 +3,7 @@
 module.exports = function (grunt) {
 	'use strict';
 
-	var DEBUG = grunt.cli.tasks[0] !== 'build';
+	var DEBUG = (grunt.cli.tasks[0] !== 'build');
 
 	var config = {
 		generateValidationReport: false,
@@ -138,7 +138,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-html-validation');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 
-	grunt.registerTask('validate', ['jshint'/*, 'validation'*/]);
+	grunt.registerTask('validate', ['jshint'/*, 'validation'*/]); // Don't run this task with others; buggy
 
 	// Asset tasks
 	grunt.loadNpmTasks('grunt-remove-logging');
