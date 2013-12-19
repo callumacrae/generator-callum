@@ -142,32 +142,12 @@ module.exports = function (grunt) {
 	grunt.initConfig(gruntConfig);
 
 
-	// Validation
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-lesslint');
-	grunt.loadNpmTasks('grunt-html-validation');
+	// Load all grunt tasks. Keep package.json up to date!
+	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
 	grunt.registerTask('validate', ['jshint', 'lesslint'/*, 'validation'*/]); // Validation is buggy
-
-	// Asset tasks
-	grunt.loadNpmTasks('grunt-remove-logging');
-	grunt.loadNpmTasks('grunt-bower-requirejs');
-	grunt.loadNpmTasks('grunt-contrib-requirejs');
-	grunt.loadNpmTasks('grunt-contrib-less');
-
 	grunt.registerTask('build', ['validate', 'bower', 'requirejs', 'less']);
-
-	// Watchers
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-browser-sync');
-	grunt.loadNpmTasks('grunt-shell');
-
 	grunt.registerTask('watchers', ['shell:watchers']);
 	grunt.registerTask('default', ['build', 'watchers']);
-
-	// Misc
-	grunt.loadNpmTasks('grunt-notify');
-
-	grunt.registerTask('default', ['build', 'shell:watchers']);
 
 };
