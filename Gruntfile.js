@@ -111,8 +111,16 @@ module.exports = function (grunt) {
 			},
 
 			scripts: {
-				files: ['<%= requirejs.compile.options.baseUrl %>/**/*.js'],
+				files: ['<%= requirejs.compile.options.baseUrl %>/**/*.js', '!app/assets/js/bower/**.*.js'],
 				tasks: ['requirejs'],
+				options: {
+					interrupt: true
+				}
+			},
+
+			bower: {
+				files: ['app/assets/js/bower/**.*.js'],
+				tasks: ['bower', 'requirejs'],
 				options: {
 					interrupt: true
 				}
