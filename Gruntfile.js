@@ -68,12 +68,10 @@ module.exports = function (grunt) {
 			}
 		},
 
-		shell: {
-			watchers: {
-				command: '(grunt watch && echo) & grunt browser_sync',
-				options: {
-					stdout: true
-				}
+		concurrent: {
+			watchers: ['watch', 'browser_sync'],
+			options: {
+				logConcurrentOutput: true
 			}
 		},
 
@@ -155,7 +153,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('validate', ['jshint', 'lesslint'/*, 'validation'*/]); // Validation is buggy
 	grunt.registerTask('build', ['validate', 'bower', 'requirejs', 'less']);
-	grunt.registerTask('watchers', ['shell:watchers']);
+	grunt.registerTask('watchers', ['concurrent:watchers']);
 	grunt.registerTask('default', ['build', 'watchers']);
 
 };
