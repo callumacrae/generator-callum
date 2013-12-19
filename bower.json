@@ -1,9 +1,10 @@
 {
-	"name": "test",
-	"authors": [
-		"Callum Macrae <callum@macr.ae>"
-	],
-	"dependencies": {
-		"jquery": "1.10.2"
-	}
+  "name": "{%= name %}",
+  "authors": [
+    "{%= author_name %} <{%= author_email %}>"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "requirejs": "~2.1.9"
+  }
 }

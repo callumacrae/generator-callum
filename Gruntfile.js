@@ -42,7 +42,10 @@ module.exports = function (grunt) {
 
 		bower: {
 			target: {
-				rjsConfig: 'app/assets/js/build.js'
+				rjsConfig: 'app/assets/js/build.js',
+				options: {
+					exclude: ['requirejs']
+				}
 			}
 		},
 		requirejs: {
@@ -52,7 +55,7 @@ module.exports = function (grunt) {
 					baseUrl: 'app/assets/js',
 					out: 'app/assets/build/script.js',
 					mainConfigFile: 'app/assets/js/build.js',
-					include:  ['lib/require']
+					include:  ['bower/require/require']
 				}
 			}
 		},
