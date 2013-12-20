@@ -1,3 +1,5 @@
 Add testing
 
 bower install --save-dev jquery#1.10.2
+
+run grunt bower on install

@@ -1,7 +1,7 @@
 {
-  "name": "{%= name %}",
+  "name": "<%= project_name %>",
   "authors": [
-    "{%= author_name %} <{%= author_email %}>"
+    "<%= author_name %> <<%= author_email %>>"
   ],
   "dependencies": {},
   "devDependencies": {

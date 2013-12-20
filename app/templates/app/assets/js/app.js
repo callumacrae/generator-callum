@@ -3,9 +3,9 @@ if (typeof DEBUG === 'undefined') {
 }
 
 /**
- * {%= name %}
+ * <%= project_name %>
  *
- * Copyright (c) {%= grunt.template.today('yyyy') %} {%= author_name %}
+ * Copyright (c) <%= new Date().getFullYear() %> <%= author_name %>
  */
 
 require([], function () {

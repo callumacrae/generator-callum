@@ -1,6 +1,6 @@
 {
-	"name": "{%= name %}",
-	"author": "{%= author_name %} <{%= author_email %}>",
+	"name": "<%= project_name %>",
+	"author": "<%= author_name %> <<%= author_email %>>",
 	"devDependencies": {
 		"grunt": "~0.4.2",
 		"grunt-contrib-jshint": "~0.7.2",
