@@ -2,24 +2,15 @@
 
 var util = require('util');
 var path = require('path');
+var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
 var yeoman = require('yeoman-generator');
+
 
 
 var CallumGenerator = module.exports = function CallumGenerator(args, options, config) {
 	yeoman.generators.Base.apply(this, arguments);
-
-	this.on('end', function () {
-		this.installDependencies({
-			skipInstall: options['skip-install'],
-			callback: function () {
-				this.emit('dependenciesInstalled');
-			}.bind(this)
-		});
-	});
-
-	this.on('dependenciesInstalled', function () {
-		this.spawnCommand('grunt', ['bower']);
-	});
+	this.options = options;
 
 	this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 };
@@ -85,7 +76,7 @@ CallumGenerator.prototype.askForLibraries = function () {
 	], function (props) {
 		if (props.otherLibrary) {
 			this.props.libraries.push(props.otherLibrary);
-			CallumGenerator.prototype.askForLibraries.call(this);
+			this.askForLibraries.call(this);
 		} else {
 			librariesAsync();
 		}
@@ -134,4 +125,157 @@ CallumGenerator.prototype.bowerTasks = function () {
 				});
 		});
 	}
+};
+
+CallumGenerator.prototype.installDeps = function () {
+	var cb = this.async();
+
+	this.installDependencies({
+		skipInstall: this.options['skip-install'],
+		callback: function () {
+			this.spawnCommand('grunt', ['bower'])
+				.on('close', function () {
+					cb();
+				});
+		}.bind(this)
+	});
+};
+
+CallumGenerator.prototype._isInstalled = function (app, cb) {
+	var cmd = spawn('which', [app]),
+		installed = false;
+
+	cmd.stdout.on('data', function () {
+		installed = true;
+	});
+
+	cmd.on('close', function () {
+		cb(installed);
+	});
+};
+
+CallumGenerator.prototype.initInitGit = function () {
+	var cb = this.async();
+
+	this._isInstalled('git', function (gitInstalled) {
+		this.gitInstalled = gitInstalled;
+
+		if (gitInstalled) {
+			this._isInstalled('hub', function (hubInstalled) {
+				this.hubInstalled = hubInstalled;
+				cb();
+			}.bind(this));
+		} else {
+			cb();
+		}
+	}.bind(this));
+};
+
+var gitAnswers;
+CallumGenerator.prototype.askGit = function () {
+	if (!this.gitInstalled) {
+		return;
+	}
+
+	var cb = this.async();
+
+	var prompts = [
+		{
+			type: 'confirm',
+			name: 'initGit',
+			message: 'Would you like to initiate git here?',
+			default: true
+		},
+		{
+			type: 'confirm',
+			name: 'commit',
+			message: 'Make an initial commit containing generated files?',
+			default: true,
+			when: function (answers) {
+				return answers.initGit;
+			}
+		},
+		{
+			name: 'commitMessage',
+			message: 'What would you like the commit message to be?',
+			default: 'Initial commit by generator-callum',
+			when: function (answers) {
+				return answers.initGit && answers.commit;
+			}
+		},
+		{
+			type: 'confirm',
+			name: 'github',
+			message: 'Create a GitHub repo?',
+			default: true,
+			when: function (answers) {
+				return answers.initGit && this.hubInstalled;
+			}.bind(this)
+		},
+		{
+			name: 'githubRepo',
+			message: 'What would you like the repo name to be?',
+			default: this.props.project_name, //jshint ignore:line
+			when: function (answers) {
+				return answers.initGit && this.hubInstalled && answers.github;
+			}.bind(this)
+		},
+		{
+			type: 'confirm',
+			name: 'pushNow',
+			message: 'Push to GitHub now?',
+			default: false,
+			when: function (answers) {
+				return answers.initGit && this.hubInstalled && answers.commit && answers.github;
+			}
+		}
+	];
+
+	this.prompt(prompts, function (answers) {
+		gitAnswers = answers;
+		cb();
+	});
+};
+
+CallumGenerator.prototype.gitInit = function () {
+	if (!gitAnswers.initGit) {
+		return;
+	}
+
+	var cb = this.async();
+
+	exec('git init', function () {
+		console.log('Git initiated');
+
+		if (gitAnswers.commit) {
+			var commitMessage = gitAnswers.commitMessage.replace(/"/g, '\\"');
+			exec('git add -A && git commit -am "' + commitMessage + '"', function () {
+				console.log('committed');
+				cb();
+			});
+		} else {
+			cb();
+		}
+	});
+};
+
+CallumGenerator.prototype.github = function () {
+	if (!gitAnswers.github) {
+		return;
+	}
+
+	var cb = this.async();
+
+	var spawnGitHub = spawn('hub', ['create', gitAnswers.githubRepo], {stdio: 'inherit'});
+	spawnGitHub.on('close', function () {
+		if (gitAnswers.commit && gitAnswers.pushNow) {
+			exec('git push origin master', cb);
+		} else {
+			cb();
+		}
+	});
+};
+
+CallumGenerator.prototype.done = function () {
+	console.log('\n\nAll done and installed!\n');
 };
