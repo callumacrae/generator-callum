@@ -5,6 +5,7 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "requirejs": "~2.1.9"
+    "requirejs": "~2.1.9",
+	"reset-css": "latest"
   }
 }
