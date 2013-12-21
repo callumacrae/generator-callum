@@ -31,5 +31,8 @@
     {
       "type": "MIT"
     }
-  ]
+  ],
+  "devDependencies": {
+    "bower": "~1.2.8"
+  }
 }

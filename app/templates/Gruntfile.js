@@ -55,7 +55,7 @@ module.exports = function (grunt) {
 					baseUrl: 'app/assets/js',
 					out: 'app/assets/build/script.js',
 					mainConfigFile: 'app/assets/js/build.js',
-					include:  ['bower/require/require']
+					include:  ['bower/requirejs/require']
 				}
 			}
 		},

@@ -1,5 +1,11 @@
 Add testing
 
-bower install --save-dev jquery#1.10.2
+Init git
 
-run grunt bower on install
+CSS reset
+
+fonts
+
+fix dir name
+
+install from npm and bower cache

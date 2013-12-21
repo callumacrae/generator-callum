@@ -2,5 +2,6 @@
 	"adjoining-classes": false,
 	"box-model": false,
 	"import": false,
-	"overqualified-elements": false
+	"overqualified-elements": false,
+	"unique-headings": false
 }
