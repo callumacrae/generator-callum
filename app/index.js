@@ -8,7 +8,7 @@ var yeoman = require('yeoman-generator');
 
 
 
-var CallumGenerator = module.exports = function CallumGenerator(args, options, config) {
+var CallumGenerator = module.exports = function CallumGenerator(args, options, config) { // jshint unused: false
 	yeoman.generators.Base.apply(this, arguments);
 	this.options = options;
 

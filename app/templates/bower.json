@@ -1,11 +1,11 @@
 {
-  "name": "<%= project_name %>",
-  "authors": [
-    "<%= author_name %> <<%= author_email %>>"
-  ],
-  "dependencies": {},
-  "devDependencies": {
-    "requirejs": "~2.1.9",
-	"reset-css": "latest"
-  }
+	"name": "<%= project_name %>",
+	"authors": [
+		"<%= author_name %> <<%= author_email %>>"
+	],
+	"dependencies": {},
+	"devDependencies": {
+		"requirejs": "~2.1.9",
+		"reset-css": "latest"
+	}
 }
