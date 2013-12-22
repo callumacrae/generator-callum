@@ -44,6 +44,12 @@ CallumGenerator.prototype.askFor = function askFor() {
 		},
 		{
 			type: 'confirm',
+			name: 'cachedDeps',
+			message: 'Should dependencies be installed from cache where possible?',
+			default: false
+		},
+		{
+			type: 'confirm',
 			name: 'jQueryInstall',
 			message: 'Would you like to install jQuery?',
 			default: true
@@ -130,15 +136,20 @@ CallumGenerator.prototype.bowerTasks = function () {
 CallumGenerator.prototype.installDeps = function () {
 	var cb = this.async();
 
-	this.installDependencies({
+	this.npmInstall(null, {
 		skipInstall: this.options['skip-install'],
-		callback: function () {
+		cacheMin: this.props.cachedDeps ? 999999 : 0
+	}, function () {
+		this.bowerInstall(null, {
+			skipInstall: this.options['skip-install'],
+			offline: this.props.cachedDeps
+		}, function () {
 			this.spawnCommand('grunt', ['bower'])
 				.on('close', function () {
 					cb();
 				});
-		}.bind(this)
-	});
+		}.bind(this));
+	}.bind(this));
 };
 
 CallumGenerator.prototype._isInstalled = function (app, cb) {
