@@ -53,6 +53,12 @@ CallumGenerator.prototype.askFor = function askFor() {
 			name: 'jQueryInstall',
 			message: 'Would you like to install jQuery?',
 			default: true
+		},
+		{
+			type: 'confirm',
+			name: 'fontLoaderInstall',
+			message: 'What about webfontloader?',
+			default: false
 		}
 	];
 
@@ -62,6 +68,9 @@ CallumGenerator.prototype.askFor = function askFor() {
 		this.props.libraries = [];
 		if (props.jQueryInstall) {
 			this.props.libraries.push('jquery#1.10.2');
+		}
+		if (props.fontLoaderInstall) {
+			this.props.libraries.push('webfontloader');
 		}
 
 		cb();
