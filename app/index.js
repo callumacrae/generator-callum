@@ -110,7 +110,7 @@ CallumGenerator.prototype.askFor = function askFor() {
 
 		this.props.libraries = [];
 		if (props.jQueryInstall) {
-			this.props.libraries.push('jquery#1.10.2');
+			this.props.libraries.push('jquery' + (props.cachedDeps ? '' : '#1.10.2'));
 		}
 		if (props.fontLoaderInstall) {
 			this.props.libraries.push('webfontloader');
@@ -256,7 +256,7 @@ CallumGenerator.prototype.askGit = function () {
 			message: 'Create a GitHub repo?',
 			default: true,
 			when: function (answers) {
-				return answers.initGit && this.hubInstalled;
+				return answers.initGit && this.installed.hub;
 			}.bind(this)
 		},
 		{
@@ -274,7 +274,7 @@ CallumGenerator.prototype.askGit = function () {
 			default: false,
 			when: function (answers) {
 				return answers.initGit && this.installed.hub && answers.commit && answers.github;
-			}
+			}.bind(this)
 		}
 	];
 

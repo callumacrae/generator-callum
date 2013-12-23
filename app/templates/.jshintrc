@@ -80,6 +80,7 @@
 
 	// Custom Globals
 	"globals"       : {
-		"DEBUG": true
+		"DEBUG": true,
+		"define": true
 	}
 }
