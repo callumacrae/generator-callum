@@ -4,15 +4,11 @@ The [Yeoman](http://yeoman.io/) generator written and used by Callum Macrae (cal
 
 ## Usage
 
-Clone this repository and run `npm link` inside the root directory (you may need to be root for this bit).
+To install, globally install the npm package (you may need to use sudo):
 
 ```bash
-git clone callumacrae/generator-callum # hub* ftw
-cd generator-callum
-npm link
+npm install -g generator-callum
 ```
-
-*[hub](https://github.com/github/hub)
 
 Make a new directory and `cd` into it:
 
