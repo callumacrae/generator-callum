@@ -1,9 +1,10 @@
 {
   "name": "generator-callum",
-  "version": "0.0.0",
-  "description": "A generator for Yeoman",
+  "version": "0.1.0",
+  "description": "The Yeoman generator written and used by Callum Macrae (callumacrae) in front-end projects.",
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "callumacrae"
   ],
   "homepage": "https://github.com/callumacrae/generator-callum",
   "bugs": "https://github.com/callumacrae/generator-callum/issues",
