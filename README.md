@@ -37,6 +37,7 @@ On setup, this generator will do the following:
 - Install useful Grunt plugins.
 - Install useful Bower plugins (plus any you tell it to).
 - Add files to your project that you will probably find useful (CSS, fonts, imgs, JavaScript, [LESS](http://lesscss.org/)).
+- If you have CasperJS installed, it will offer to install the Grunt plugin and create a testing directory.
 - If you want it to, initialise a Git repo, optionally committing files created by the generator.
 - If you have [hub](https://github.com/github/hub) installed, it will offer to create and push to a GitHub repository.
 
@@ -49,9 +50,10 @@ The generated project by default offers the following features:
 - It'll optionally automatically add jQuery (refer to it as "jquery" in RequireJS).
 - A `DEBUG` constant! Debug code will be automatically removed from production.
 - CSS awesomeness using [LESS](http://lesscss.org/).
-- CSS reset using Eric Meyer's "Reset CSS" 2.0
+- CSS reset using Eric Meyer's "Reset CSS" 2.0.
 - Automatically compiles and minifies LESS and JavaScript when changes to files are detected.
 - Uses [browser-sync](http://css-tricks.com/cross-browser-css-injection/) to sync CSS changes between browsers. Also has ghost mode activated by default, so link clicks, form changes and scroll changes are synced between browsers.
+- Runs your CasperJS tests for you.
 
 
 ## To use
@@ -80,6 +82,7 @@ More specific to this project, if `grunt watchers` is running then bower plugins
 - `grunt build` will run validate (as seen above), generate the bower build file, minify the RequireJS files, and parse and minify the LESS files.
 - `grunt watchers` will run the watchers, so that if you add a bower library it will be added to the project, or if you change a JavaScript or LESS file, they will be parsed and minified. It also runs `browser-sync` (which is slightly useless when file changes aren't being applied to the website).
 - `grunt bower` will add bower libraries that haven't been added yet to the build file. This is useful if the libraries were added when the watchers weren't running when you ran `bower install`.
+- `grunt test` will run CasperJS tests.
 - Just `grunt` will run `grunt build`, and then `grunt watchers`.
 
 If you run `grunt build`, debug will be set to off, and `DEBUG` code will be removed and code minified. If you run `grunt`, it is slightly different when it calls `grunt build` in that debug will be set to on, and `DEBUG` will be set to true. Code won't be minified, either.

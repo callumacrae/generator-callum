@@ -125,6 +125,15 @@ module.exports = function (grunt) {
 				options: {
 					interrupt: true
 				}
+			},
+
+			casperjs: {
+				options: {
+					async: {
+						parallel: false
+					}
+				},
+				files: ['tests/casperjs/**/*.js']
 			}
 		}
 	};
@@ -157,6 +166,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('validate', ['jshint', 'lesslint'/*, 'validation'*/]); // Validation is buggy
 	grunt.registerTask('build', ['validate', 'bower', 'requirejs', 'less']);
 	grunt.registerTask('watchers', ['concurrent:watchers']);
+	grunt.registerTask('test', ['casperjs']);
 	grunt.registerTask('default', ['build', 'watchers']);
 
 };

@@ -17,6 +17,40 @@ var CallumGenerator = module.exports = function CallumGenerator(args, options, c
 
 util.inherits(CallumGenerator, yeoman.generators.Base);
 
+
+
+CallumGenerator.prototype._isInstalled = function (app, cb) {
+	var cmd = spawn('which', [app]),
+		installed = false;
+
+	cmd.stdout.on('data', function () {
+		installed = true;
+	});
+
+	cmd.on('close', function () {
+		cb(installed);
+	});
+};
+
+CallumGenerator.prototype.checkDeps = function () {
+	var deps = ['casperjs', 'git', 'hub'],
+		completed = 0,
+		cb = this.async();
+
+	this.installed = {};
+
+	deps.forEach(function (dep) {
+		this._isInstalled(dep, function (installed) {
+			this.installed[dep] = installed;
+
+			completed++;
+			if (completed === deps.length) {
+				cb();
+			}
+		}.bind(this));
+	}.bind(this));
+};
+
 CallumGenerator.prototype.askFor = function askFor() {
 	var cb = this.async();
 
@@ -47,6 +81,15 @@ CallumGenerator.prototype.askFor = function askFor() {
 			name: 'cachedDeps',
 			message: 'Should dependencies be installed from cache where possible?',
 			default: false
+		},
+		{
+			type: 'confirm',
+			name: 'casperInstall',
+			message: 'Do you want unit testing with CasperJS?',
+			default: false,
+			when: function () {
+				return this.installed.casperjs;
+			}.bind(this)
 		},
 		{
 			type: 'confirm',
@@ -154,46 +197,30 @@ CallumGenerator.prototype.installDeps = function () {
 			offline: this.props.cachedDeps
 		}, function () {
 			this.spawnCommand('grunt', ['bower'])
-				.on('close', function () {
-					cb();
-				});
+				.on('close', cb);
 		}.bind(this));
 	}.bind(this));
 };
 
-CallumGenerator.prototype._isInstalled = function (app, cb) {
-	var cmd = spawn('which', [app]),
-		installed = false;
+CallumGenerator.prototype.installCasper = function () {
+	if (!this.props.casperInstall) {
+		return;
+	}
 
-	cmd.stdout.on('data', function () {
-		installed = true;
-	});
-
-	cmd.on('close', function () {
-		cb(installed);
-	});
-};
-
-CallumGenerator.prototype.initInitGit = function () {
 	var cb = this.async();
 
-	this._isInstalled('git', function (gitInstalled) {
-		this.gitInstalled = gitInstalled;
+	this.mkdir('tests');
+	this.mkdir('tests/casperjs');
 
-		if (gitInstalled) {
-			this._isInstalled('hub', function (hubInstalled) {
-				this.hubInstalled = hubInstalled;
-				cb();
-			}.bind(this));
-		} else {
-			cb();
-		}
-	}.bind(this));
+	this.npmInstall(['grunt-casperjs'], {
+		cacheMin: this.props.cachedDeps ? 999999 : 0,
+		saveDev: true
+	}, cb);
 };
 
 var gitAnswers;
 CallumGenerator.prototype.askGit = function () {
-	if (!this.gitInstalled) {
+	if (!this.installed.git) {
 		return;
 	}
 
@@ -237,7 +264,7 @@ CallumGenerator.prototype.askGit = function () {
 			message: 'What would you like the repo name to be?',
 			default: this.props.project_name, //jshint ignore:line
 			when: function (answers) {
-				return answers.initGit && this.hubInstalled && answers.github;
+				return answers.initGit && this.installed.hub && answers.github;
 			}.bind(this)
 		},
 		{
@@ -246,7 +273,7 @@ CallumGenerator.prototype.askGit = function () {
 			message: 'Push to GitHub now?',
 			default: false,
 			when: function (answers) {
-				return answers.initGit && this.hubInstalled && answers.commit && answers.github;
+				return answers.initGit && this.installed.hub && answers.commit && answers.github;
 			}
 		}
 	];
