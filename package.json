@@ -1,38 +1,39 @@
 {
-	"name": "generator-callum",
-	"version": "0.0.0",
-	"description": "The Yeoman generator written and used by Callum Macrae (callumacrae) in front-end projects.",
-	"keywords": [
-		"yeoman-generator", "callumacrae"
-	],
-	"homepage": "https://github.com/callumacrae/generator-callum",
-	"bugs": "https://github.com/callumacrae/generator-callum/issues",
-	"author": {
-		"name": "Callum Macrae",
-		"email": "callum@lynxphp.com",
-		"url": "https://github.com/callumacrae"
-	},
-	"main": "app/index.js",
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/callumacrae/generator-callum.git"
-	},
-	"dependencies": {
-		"yeoman-generator": "~0.14.0"
-	},
-	"peerDependencies": {
-		"yo": ">=1.0.0"
-	},
-	"engines": {
-		"node": ">=0.8.0",
-		"npm": ">=1.2.10"
-	},
-	"licenses": [
-		{
-			"type": "MIT"
-		}
-	],
-	"devDependencies": {
-		"bower": "~1.2.8"
-	}
+  "name": "generator-callum",
+  "version": "0.1.0",
+  "description": "The Yeoman generator written and used by Callum Macrae (callumacrae) in front-end projects.",
+  "keywords": [
+    "yeoman-generator",
+    "callumacrae"
+  ],
+  "homepage": "https://github.com/callumacrae/generator-callum",
+  "bugs": "https://github.com/callumacrae/generator-callum/issues",
+  "author": {
+    "name": "Callum Macrae",
+    "email": "callum@lynxphp.com",
+    "url": "https://github.com/callumacrae"
+  },
+  "main": "app/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/callumacrae/generator-callum.git"
+  },
+  "dependencies": {
+    "yeoman-generator": "~0.14.0"
+  },
+  "peerDependencies": {
+    "yo": ">=1.0.0"
+  },
+  "engines": {
+    "node": ">=0.8.0",
+    "npm": ">=1.2.10"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "devDependencies": {
+    "bower": "~1.2.8"
+  }
 }
