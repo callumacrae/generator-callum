@@ -324,5 +324,5 @@ CallumGenerator.prototype.github = function () {
 };
 
 CallumGenerator.prototype.done = function () {
-	console.log('\n\nAll done and installed!\n');
+	console.log('\n\nAll done and installed!\n\nType "grunt" to run grunt now.\n');
 };
