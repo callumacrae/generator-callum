@@ -143,6 +143,7 @@ CallumGenerator.prototype.askForLibraries = function () {
 
 CallumGenerator.prototype.staticFiles = function () {
 	this.directory('.', '.');
+	this.copy('.gitignore', '.gitignore'); // ?!
 };
 
 CallumGenerator.prototype.templateFiles = function () {
