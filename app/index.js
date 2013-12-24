@@ -298,7 +298,7 @@ CallumGenerator.prototype.gitInit = function () {
 		if (gitAnswers.commit) {
 			var commitMessage = gitAnswers.commitMessage.replace(/"/g, '\\"');
 			exec('git add -A && git commit -am "' + commitMessage + '"', function () {
-				console.log('committed');
+				console.log('Committed to Git');
 				cb();
 			});
 		} else {
@@ -314,10 +314,18 @@ CallumGenerator.prototype.github = function () {
 
 	var cb = this.async();
 
+	console.log('Creating GitHub repository...');
+
 	var spawnGitHub = spawn('hub', ['create', gitAnswers.githubRepo], {stdio: 'inherit'});
 	spawnGitHub.on('close', function () {
+		console.log('Created GitHub repository');
+
 		if (gitAnswers.commit && gitAnswers.pushNow) {
-			exec('git push origin master', cb);
+			console.log('Pushing to GitHub...');
+			exec('git push origin master', function () {
+				console.log('Pushed to GitHub');
+				cb();
+			});
 		} else {
 			cb();
 		}
