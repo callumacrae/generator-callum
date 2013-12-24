@@ -22,7 +22,7 @@ Then run the yo command:
 yo callum
 ```
 
-Setup will run, magic will happen. [Grunt](gruntjs.com) plugins and [Bower](http://bower.io) packages will be automatically installed.
+Setup will run, magic will happen. [Grunt](http://gruntjs.com/) plugins and [Bower](http://bower.io/) packages will be automatically installed.
 
 ## Stuff what this does
 
