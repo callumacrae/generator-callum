@@ -34,7 +34,8 @@ module.exports = function (grunt) {
 			},
 			files: {
 				src: [
-					'app/**/*.html'
+					'app/**/*.html',
+					'!app/assets/js/**/*.html'
 				]
 			}
 		},
@@ -163,7 +164,7 @@ module.exports = function (grunt) {
 	// Load all grunt tasks. Keep package.json up to date!
 	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-	grunt.registerTask('validate', ['jshint', 'lesslint'/*, 'validation'*/]); // Validation is buggy
+	grunt.registerTask('validate', ['jshint', 'lesslint', 'validation']);
 	grunt.registerTask('build', ['validate', 'bower', 'requirejs', 'less']);
 	grunt.registerTask('watchers', ['concurrent:watchers']);
 	grunt.registerTask('test', ['casperjs']);
