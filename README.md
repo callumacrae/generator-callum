@@ -1,4 +1,4 @@
-# generator-callum [![NPM version](https://badge.fury.io/js/generator-callum.png)](http://badge.fury.io/js/generator-callum) [![Dependency Status](https://david-dm.org/callumacrae/generator-callum.png)](https://david-dm.org/callumacrae/generator-callum) [![devDependency Status](https://david-dm.org/callumacrae/generated_callum/dev-status.png)](https://david-dm.org/callumacrae/generated_callum#info=devDependencies)
+# generator-callum [![NPM version](https://badge.fury.io/js/generator-callum.png)](http://badge.fury.io/js/generator-callum) [![Dependency Status](https://david-dm.org/callumacrae/generator-callum.png)](https://david-dm.org/callumacrae/generator-callum) [![devDependency Status](https://david-dm.org/callumacrae/generated_callum/dev-status.png)](https://david-dm.org/callumacrae/generated_callum#info=devDependencies) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 The [Yeoman](http://yeoman.io/) generator written and used by Callum Macrae (callumacrae) in front-end projects.
 

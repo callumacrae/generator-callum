@@ -126,16 +126,16 @@ module.exports = function (grunt) {
 				options: {
 					interrupt: true
 				}
-			},
-
-			casperjs: {
-				options: {
-					async: {
-						parallel: false
-					}
-				},
-				files: ['tests/casperjs/**/*.js']
 			}
+		},
+
+		casperjs: {
+			options: {
+				async: {
+					parallel: false
+				}
+			},
+			files: ['tests/casperjs/**/*.js']
 		}
 	};
 
