@@ -19,7 +19,7 @@
     "url": "git://github.com/callumacrae/generator-callum.git"
   },
   "dependencies": {
-    "yeoman-generator": "~0.14.0",
+    "yeoman-generator": "~0.16.0",
     "bower": "~1.2.8"
   },
   "peerDependencies": {

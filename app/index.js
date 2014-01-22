@@ -82,15 +82,15 @@ CallumGenerator.prototype.askFor = function askFor() {
 			message: 'Should dependencies be installed from cache where possible?',
 			default: false
 		},
-		{
-			type: 'confirm',
-			name: 'casperInstall',
-			message: 'Do you want unit testing with CasperJS?',
-			default: false,
-			when: function () {
-				return this.installed.casperjs;
-			}.bind(this)
-		},
+//		{
+//			type: 'confirm',
+//			name: 'casperInstall',
+//			message: 'Do you want unit testing with CasperJS?',
+//			default: false,
+//			when: function () {
+//				return this.installed.casperjs;
+//			}.bind(this)
+//		},
 		{
 			type: 'confirm',
 			name: 'jQueryInstall',
@@ -197,27 +197,28 @@ CallumGenerator.prototype.installDeps = function () {
 			skipInstall: this.options['skip-install'],
 			offline: this.props.cachedDeps
 		}, function () {
-			this.spawnCommand('grunt', ['bower'])
-				.on('close', cb);
+//			this.spawnCommand('grunt', ['bower'])
+//				.on('close', cb);
+			cb(); // @todo: Do this
 		}.bind(this));
 	}.bind(this));
 };
 
-CallumGenerator.prototype.installCasper = function () {
-	if (!this.props.casperInstall) {
-		return;
-	}
-
-	var cb = this.async();
-
-	this.mkdir('tests');
-	this.mkdir('tests/casperjs');
-
-	this.npmInstall(['grunt-casperjs'], {
-		cacheMin: this.props.cachedDeps ? 999999 : 0,
-		saveDev: true
-	}, cb);
-};
+//CallumGenerator.prototype.installCasper = function () {
+//	if (!this.props.casperInstall) {
+//		return;
+//	}
+//
+//	var cb = this.async();
+//
+//	this.mkdir('tests');
+//	this.mkdir('tests/casperjs');
+//
+//	this.npmInstall(['grunt-casperjs'], {
+//		cacheMin: this.props.cachedDeps ? 999999 : 0,
+//		saveDev: true
+//	}, cb);
+//};
 
 var gitAnswers;
 CallumGenerator.prototype.askGit = function () {
@@ -333,5 +334,5 @@ CallumGenerator.prototype.github = function () {
 };
 
 CallumGenerator.prototype.done = function () {
-	console.log('\n\nAll done and installed!\n\nType "grunt" to run grunt now.\n');
+	console.log('\n\nAll done and installed!\n\nType "gulp" to run gulp now.\n');
 };
